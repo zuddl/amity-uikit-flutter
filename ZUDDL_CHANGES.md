@@ -170,3 +170,5 @@ its text.
 - `amity_community_profile_page.dart`: optional `zuddlFeedHeader`, shown as a sliver between the
   pinned tabs and the posts on the Timeline tab only. portal-flutter puts the event's
   scroll-with-page banner there, as iOS (`1f96d55`, `c79fa55`). With none, nothing changes.
+- Also `zuddlFeedFooter`: the last Timeline row, in a `SliverFillRemaining` so a short feed shows it
+  at the bottom and a long one after the last post. For a scroll-with-page BOTTOM banner.

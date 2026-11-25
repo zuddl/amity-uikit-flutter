@@ -34,8 +34,15 @@ class AmityCommunityProfilePage extends NewBasePage {
   /// scroll-with-page banner), as iOS 1f96d55 / c79fa55.
   final Widget? zuddlFeedHeader;
 
+  /// [ZUDDL] The host's last feed row on the Timeline tab (a scroll-with-page
+  /// BOTTOM banner): after the last post, or at the bottom when the feed is short.
+  final Widget? zuddlFeedFooter;
+
   AmityCommunityProfilePage(
-      {super.key, required this.communityId, this.zuddlFeedHeader})
+      {super.key,
+      required this.communityId,
+      this.zuddlFeedHeader,
+      this.zuddlFeedFooter})
       : super(pageId: 'community_profile');
 
   final ScrollController _scrollController = ScrollController();
@@ -267,6 +274,16 @@ class AmityCommunityProfilePage extends NewBasePage {
                     CommunityFeedComponent(
                       communityId: state.communityId,
                       scrollController: _scrollController,
+                    ),
+                  // [ZUDDL] Short feed: pinned to the bottom; long: after the
+                  // last post. Same as portal-flutter's Schedule.
+                  if (state.selectedIndex == CommunityProfileTabIndex.feed &&
+                      zuddlFeedFooter != null)
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: zuddlFeedFooter),
                     ),
                   if (state.selectedIndex == CommunityProfileTabIndex.pin)
                     CommunityPinComponent(
