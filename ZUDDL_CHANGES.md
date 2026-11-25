@@ -39,3 +39,9 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
   portal-flutter's `connectivity_plus`. v13 `pickFiles()` returns a list and always allows several
   files, so the 3 call sites changed (`post_composer_file_picker.dart`, `create_postV2_viewmodel.dart`).
   (portal-flutter raises its own `package_info_plus`, `device_info_plus` and `share_plus` to match.)
+
+## F6 (part): community page back button
+
+- `amity_community_profile_page.dart` and `element/community_cover_view.dart`: the back button uses
+  `Navigator.maybePop`, so it does nothing when the community page is the first page of the host's
+  navigator (the Feed tab). Hiding it there is slice 3.

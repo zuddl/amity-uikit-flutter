@@ -37,7 +37,8 @@ class AmityCommunityCoverView extends BaseElement {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () => {Navigator.pop(context)},
+                      // [ZUDDL] maybePop: a no-op when this page is the host's first page.
+                      onTap: () => {Navigator.maybePop(context)},
                       child: Container(
                         height: 32,
                         width: 32,

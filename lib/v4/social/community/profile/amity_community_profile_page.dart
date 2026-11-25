@@ -64,7 +64,8 @@ class AmityCommunityProfilePage extends NewBasePage {
                           leading: Padding(
                             padding: const EdgeInsets.only(left: 16),
                             child: GestureDetector(
-                              onTap: () => {Navigator.pop(context)},
+                              // [ZUDDL] maybePop: a no-op when this page is the host's first page.
+                              onTap: () => {Navigator.maybePop(context)},
                               child: Container(
                                 height: 32,
                                 width: 32,
