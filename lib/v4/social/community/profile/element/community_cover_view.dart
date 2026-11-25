@@ -2,11 +2,9 @@ import 'dart:ui';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
-import 'package:amity_uikit_beta_service/v4/social/community/community_setting/community_setting_page.dart';
 import 'package:amity_uikit_beta_service/v4/social/community/profile/component/community_header_component.dart';
 import 'package:amity_uikit_beta_service/v4/utils/network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AmityCommunityCoverView extends BaseElement {
   final AmityCommunity? community;
@@ -28,65 +26,9 @@ class AmityCommunityCoverView extends BaseElement {
           child: Stack(
             fit: StackFit.expand,
             children: [
+              // [ZUDDL] No back or options button on the cover, as native: the
+              // host's header has back, and community settings stay hidden.
               renderAvatarImage(),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(top: 60, left: 16, right: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      // [ZUDDL] maybePop: a no-op when this page is the host's first page.
-                      onTap: () => {Navigator.maybePop(context)},
-                      child: Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            "assets/Icons/amity_ic_back_button.svg",
-                            package: 'amity_uikit_beta_service',
-                            height: 18,
-                            width: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Flexible(flex: 1, child: Container()),
-                    GestureDetector(
-                      onTap: () => {
-                        if (community != null)
-                          {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context2) => AmityCommunitySettingPage(community: community!)))
-                          }
-                      },
-                      child: Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            "assets/Icons/amity_ic_post_item_option.svg",
-                            package: 'amity_uikit_beta_service',
-                            height: 18,
-                            width: 18,
-                            colorFilter: const ColorFilter.mode(
-                                Colors.white, BlendMode.srcIn),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         );

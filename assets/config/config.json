@@ -1,4 +1,7 @@
 {
+  "feature_flags": {
+    "story": { "create_enabled": false, "view_story_tab_enabled": false }
+  },
     "preferred_theme": "default",
     "theme": {
     "light": {

@@ -65,3 +65,14 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
 - `amity_community_profile_page.dart`: the collapsed header uses the real top inset
   (`MediaQuery.paddingOf(context).top`) instead of a hard-coded 44 (iOS) / 24 (Android). Inside
   portal-flutter's Feed the inset is 0, and the old value overflowed the bar by 44 px.
+
+## F6 (part): community page like native
+
+Requested 2026-11-25 after comparing with native iOS on prod.
+
+- `assets/config/config.json`: `feature_flags.story` `create_enabled` and `view_story_tab_enabled`
+  are false, so the Story ring is gone.
+- `element/community_cover_view.dart`: the cover has no back or options ("…") button. The host's
+  header has back; community settings stay hidden.
+- `amity_community_profile_page.dart`: no collapsed community-name bar (`_zuddlShowsCollapsedBar`);
+  the tab row is pinned at the top on scroll (`_PinnedTabsDelegate`, 48 pt).

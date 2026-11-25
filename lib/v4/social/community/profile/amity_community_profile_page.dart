@@ -53,7 +53,8 @@ class AmityCommunityProfilePage extends NewBasePage {
               body: CustomScrollView(
                 controller: state.scrollController,
                 slivers: <Widget>[
-                  !(state.isExpanded)
+                  // [ZUDDL] No collapsed name bar: the tabs stick instead, as native.
+                  _zuddlShowsCollapsedBar && !(state.isExpanded)
                       ? SliverAppBar(
                           floating: false,
                           pinned: true,
@@ -238,14 +239,17 @@ class AmityCommunityProfilePage extends NewBasePage {
                           )
                         : Container(),
                   ),
-                  SliverToBoxAdapter(
-                    child: CommunityProfileTab(
-                      selectedIndex: state.selectedIndex,
-                      onTabSelected: (index) {
-                        context
-                            .read<CommunityProfileBloc>()
-                            .add(CommunityProfileEventTabSelected(tab: index));
-                      },
+                  // [ZUDDL] The tabs stay pinned at the top on scroll, as native.
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _PinnedTabsDelegate(
+                      CommunityProfileTab(
+                        selectedIndex: state.selectedIndex,
+                        onTabSelected: (index) {
+                          context.read<CommunityProfileBloc>().add(
+                              CommunityProfileEventTabSelected(tab: index));
+                        },
+                      ),
                     ),
                   ),
                   if (state.selectedIndex == CommunityProfileTabIndex.feed)
@@ -690,4 +694,28 @@ class AmityCommunityProfilePage extends NewBasePage {
       closeText: "OK",
     );
   }
+}
+
+// [ZUDDL] Off: native shows no collapsed bar, only pinned tabs.
+const bool _zuddlShowsCollapsedBar = false;
+
+/// [ZUDDL] Keeps [CommunityProfileTab] (47 + 1 divider) pinned at the top.
+class _PinnedTabsDelegate extends SliverPersistentHeaderDelegate {
+  _PinnedTabsDelegate(this.tabs);
+
+  final Widget tabs;
+
+  @override
+  double get minExtent => 48;
+
+  @override
+  double get maxExtent => 48;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) =>
+      tabs;
+
+  @override
+  bool shouldRebuild(_PinnedTabsDelegate oldDelegate) =>
+      oldDelegate.tabs != tabs;
 }
