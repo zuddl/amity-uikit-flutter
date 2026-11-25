@@ -105,4 +105,7 @@ uploaded to Amity, so every avatar showed initials. Both natives read the custom
 - Every user avatar reads it: post header, comments (`AmityUserImage`), comment box, mentions,
   members, follow lists, pending posts, profile header and edit page, community setup.
 - The full-screen profile photo viewer still opens only an Amity file (it adds `?size=large`).
+- No photo: `ZuddlInitialsAvatar`, up to two initials in `secondary_color` on `primary_color`, text
+  half the circle's width. It matches portal-flutter's speaker avatar in session details, instead of
+  Amity's one-letter disc. Used by `AmityUserAvatar` and `AmityUserImage`.
 - Test: `test/v4/utils/zuddl_avatar_test.dart`.

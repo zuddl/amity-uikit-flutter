@@ -2,9 +2,6 @@ import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:flutter/material.dart';
 
-import 'package:amity_uikit_beta_service/v4/core/theme/amity_color_token.dart';
-import 'package:amity_uikit_beta_service/v4/core/theme/amity_token_context.dart';
-
 import '../core/theme.dart';
 
 class AmityUserImage extends StatelessWidget {
@@ -24,35 +21,9 @@ class AmityUserImage extends StatelessWidget {
   String? get imageUrl => user?.zuddlAvatarUrl;
   String get displayName => user?.displayName ?? "";
 
-  double _mapSizeToFontSize(double size) {
-    if (size == 64) return 32;
-    if (size == 56) return 32;
-    if (size == 40) return 20;
-    if (size == 32) return 17;
-    if (size == 28) return 15;
-    if (size == 16) return 10;
-    return 10; // default case
-  }
-
-  Widget _buildPlaceholder(BuildContext context) {
-    return Container(
-      // Same disc as AmityUserAvatar / AmityChannelAvatar, so it resolves the
-      // same token. A computed shade cannot: every rung of the primary ramp is
-      // one hex across both modes, and the flip lives in the token pointing at
-      // shade2 on light and shade1 on dark.
-      color: context.amityToken(AmityColorToken.surfaceAvatarProfileDefault),
-      child: Center(
-        child: Text(
-          displayName.trim().isNotEmpty ? displayName.trim()[0].toUpperCase() : '?',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: _mapSizeToFontSize(size),
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-      ),
-    );
-  }
+  // [ZUDDL] Same as portal-flutter's speaker avatar, not Amity's letter disc.
+  Widget _buildPlaceholder(BuildContext context) =>
+      ZuddlInitialsAvatar(name: displayName, size: size, theme: theme);
 
   @override
   Widget build(BuildContext context) {
