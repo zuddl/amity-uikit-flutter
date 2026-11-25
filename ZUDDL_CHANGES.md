@@ -24,6 +24,7 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
   own list. `AmityUIKit.cameras` stays empty, which is fine while story creation is off.
 - `unRegisterDevice()` returns a `Future` and unregisters push before `logout()`.
 - Locale debug `print`s removed.
+- `registerDevice(context:)` is optional. It was unused, and portal-flutter signs in from its data layer.
 
 ## F4: `AmityUIKitScope`
 

@@ -119,8 +119,10 @@ class AmityUIKit {
     log('setupAmityClient execution time: ${stopwatch.elapsedMilliseconds} ms');
   }
 
+  // [ZUDDL] context is optional: it is unused, and the host signs in from its
+  // data layer, which has no widget context.
   Future<void> registerDevice(
-      {required BuildContext context,
+      {BuildContext? context,
       required String userId,
       String? displayName,
       String? authToken,
