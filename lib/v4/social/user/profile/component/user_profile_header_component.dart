@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
@@ -81,7 +82,7 @@ class AmityUserProfileHeaderComponent extends NewBaseComponent {
                               }
                             },
                             child: AmityUserAvatar(
-                              avatarUrl: user?.avatarUrl,
+                              avatarUrl: user?.zuddlAvatarUrl,
                               displayName: user?.displayName ?? "",
                               isDeletedUser: user?.isDeleted ?? false,
                               avatarSize: const Size(56, 56),

@@ -1,4 +1,5 @@
 // filepath: /Users/zryte/Documents/Amity-Social-Cloud-UIKit-Flutter/lib/v4/social/community/pending_posts/amity_pending_post_content_component.dart
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/amity_uikit.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
@@ -178,7 +179,7 @@ class AmityPendingPostContentComponent extends NewBaseComponent {
                 onTap: () => _goToUserProfilePage(
                     context, displayPost.postedUser?.userId ?? ""),
                 child: AmityUserAvatar(
-                  avatarUrl: displayPost.postedUser?.avatarUrl,
+                  avatarUrl: displayPost.postedUser?.zuddlAvatarUrl,
                   displayName: displayPost.postedUser?.displayName ?? "",
                   isDeletedUser: false,
                   avatarSize: const Size(32, 32),

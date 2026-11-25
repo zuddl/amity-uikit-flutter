@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
 import 'package:amity_uikit_beta_service/v4/core/styles.dart';
@@ -38,7 +39,7 @@ class AmityUserAvatar extends BaseElement {
     super.componentId = "",
     super.elementId = "",
   }) {
-    avatarUrl = channelMember?.user?.avatarUrl;
+    avatarUrl = channelMember?.user?.zuddlAvatarUrl;
     isDeletedUser = channelMember?.isDeleted ?? false;
     displayName = channelMember?.user?.displayName ?? "";
   }

@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/amity_uikit.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
@@ -166,7 +167,7 @@ class PendingRequestItem extends BaseElement {
               child: Row(
                 children: [
                   AmityUserAvatar(
-                      avatarUrl: user.sourceUser?.avatarUrl,
+                      avatarUrl: user.sourceUser?.zuddlAvatarUrl,
                       displayName: user.sourceUser?.displayName ?? "",
                       isDeletedUser: false),
                   const SizedBox(width: 12),

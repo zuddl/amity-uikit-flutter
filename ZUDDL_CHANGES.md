@@ -94,3 +94,15 @@ portal-flutter sets the feed colours from the event theme, like iOS `AppManager.
 - Fonts: removed the hardcoded `fontFamily: 'SF Pro Text'` outside `story/` (`styles.dart`,
   comments, reactions, search, community feed and pin), so text inherits the host app's font.
 - Test: `test/v4/core/theme/zuddl_host_theme_test.dart`.
+
+## Fix: user avatars use the Zuddl profile photo
+
+Zuddl stores the attendee's photo as Amity `avatarCustomUrl`; `avatarUrl` is only set for a file
+uploaded to Amity, so every avatar showed initials. Both natives read the custom URL (Android
+`AmityPostHeaderViewHolder.kt:50`, `AmityPostCommentView.kt:67`; iOS `AmityPostModel.swift:304`).
+
+- `lib/v4/utils/zuddl_avatar.dart`: `AmityUser.zuddlAvatarUrl`, the custom URL, else `avatarUrl`.
+- Every user avatar reads it: post header, comments (`AmityUserImage`), comment box, mentions,
+  members, follow lists, pending posts, profile header and edit page, community setup.
+- The full-screen profile photo viewer still opens only an Amity file (it adds `?size=large`).
+- Test: `test/v4/utils/zuddl_avatar_test.dart`.

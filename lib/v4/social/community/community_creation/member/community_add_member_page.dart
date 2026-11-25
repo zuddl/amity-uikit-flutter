@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_page.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart';
@@ -123,7 +124,7 @@ class AmityCommunityAddMemberPage extends NewBasePage {
                 shape: BoxShape.circle,
                 color: theme.baseColorShade4,
               ),
-              child:  AmityUserAvatar(avatarUrl: user.avatarUrl, displayName: user.displayName ?? context.l10n.user_profile_unknown_name, isDeletedUser: false)),
+              child:  AmityUserAvatar(avatarUrl: user.zuddlAvatarUrl, displayName: user.displayName ?? context.l10n.user_profile_unknown_name, isDeletedUser: false)),
           const SizedBox(
               width: 8), // Add some spacing between the icon and text
           Expanded(
@@ -172,7 +173,7 @@ class AmityCommunityAddMemberPage extends NewBasePage {
                     shape: BoxShape.circle,
                     color: theme.primaryColor.blend(ColorBlendingOption.shade2),
                   ),
-                  child:  AmityUserAvatar(avatarUrl: user.avatarUrl, displayName: user.displayName ?? context.l10n.user_profile_unknown_name, isDeletedUser: false)),
+                  child:  AmityUserAvatar(avatarUrl: user.zuddlAvatarUrl, displayName: user.displayName ?? context.l10n.user_profile_unknown_name, isDeletedUser: false)),
               Transform.translate(
                 offset: const Offset(5, -2),
                 child: Container(

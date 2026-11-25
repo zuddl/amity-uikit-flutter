@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_page.dart';
 import 'package:amity_uikit_beta_service/v4/core/styles.dart';
@@ -102,7 +103,7 @@ class AmityEditUserProfilePage extends NewBasePage {
                                     // We need to fetch user profile here & show it as network avatar
                                     if (state.selectedImage == null) ...[
                                       AmityUserAvatar(
-                                        avatarUrl: state.user?.avatarUrl ?? "",
+                                        avatarUrl: state.user?.zuddlAvatarUrl ?? "",
                                         displayName:
                                             state.user?.displayName ?? "",
                                         isDeletedUser:

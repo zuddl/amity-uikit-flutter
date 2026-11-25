@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_page.dart';
@@ -545,7 +546,7 @@ class AmityCommunitySetupPage extends NewBasePage {
                     color: theme.primaryColor.blend(ColorBlendingOption.shade2),
                   ),
                   child: AmityUserAvatar(
-                      avatarUrl: user.avatarUrl,
+                      avatarUrl: user.zuddlAvatarUrl,
                       displayName: user.displayName ??
                           context.l10n.user_profile_unknown_name,
                       isDeletedUser: false)),

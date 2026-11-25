@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
@@ -312,7 +313,7 @@ class _AmityCommentCreatorInternalState
     if (userId.isNotEmpty) {
       AmityCoreClient.newUserRepository().getUser(userId).then((user) {
         setState(() {
-          avatarUrl = user.avatarUrl;
+          avatarUrl = user.zuddlAvatarUrl;
         });
       });
     }

@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class AmityUserImage extends StatelessWidget {
     required this.theme,
   });
 
-  String? get imageUrl => user?.avatarUrl;
+  String? get imageUrl => user?.zuddlAvatarUrl;
   String get displayName => user?.displayName ?? "";
 
   double _mapSizeToFontSize(double size) {

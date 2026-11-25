@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/amity_uikit.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
@@ -92,7 +93,7 @@ class AmityPostHeader extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     top: 8, left: 12, right: 4, bottom: 8),
                 child: AmityUserAvatar(
-                  avatarUrl: post.postedUser?.avatarUrl,
+                  avatarUrl: post.postedUser?.zuddlAvatarUrl,
                   displayName: post.postedUser?.displayName ?? "",
                   isDeletedUser: post.postedUser?.isDeleted ?? false,
                   characterTextStyle: AmityTextStyle.titleBold(Colors.white),

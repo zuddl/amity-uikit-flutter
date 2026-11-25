@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/amity_uikit.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
@@ -166,7 +167,7 @@ class AmityCommunityMembershipPage extends NewBasePage {
                     ),
                     child: member.user != null
                         ? AmityUserAvatar(
-                            avatarUrl: member.user?.avatarUrl,
+                            avatarUrl: member.user?.zuddlAvatarUrl,
                             displayName: member.user?.displayName ??
                                 context.l10n.user_profile_unknown_name,
                             isDeletedUser: false)

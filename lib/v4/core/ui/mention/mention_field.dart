@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_avatar.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -1123,7 +1124,7 @@ class _MentionTextFieldState extends State<MentionTextField>
       UserMention(
         id: user.userId ?? '',
         displayName: _getUserDisplayName(user, context),
-        avatarUrl: user.avatarUrl ?? '',
+        avatarUrl: user.zuddlAvatarUrl ?? '',
       ),
     );
     final currentMentionsCount =
