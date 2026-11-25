@@ -137,7 +137,7 @@ class CommentItem extends BaseElement {
                           alignment: Alignment.centerLeft,
                           padding: const EdgeInsets.all(12),
                           decoration: ShapeDecoration(
-                            color: theme.baseColorShade4,
+                            color: theme.commentBackgroundColor, // [ZUDDL] iOS bubble colour
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(12),
@@ -265,7 +265,7 @@ class CommentItem extends BaseElement {
                         alignment: Alignment.topLeft,
                         height: 120, // Maintain fixed height for edit bubble
                         decoration: ShapeDecoration(
-                          color: theme.baseColorShade4,
+                          color: theme.commentBackgroundColor, // [ZUDDL] iOS bubble colour
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),

@@ -49,7 +49,7 @@ class AmityCommunityProfilePage extends NewBasePage {
             final featureConfig = configProvider.getFeatureConfig();
 
             return Scaffold(
-              backgroundColor: theme.baseColorShade4,
+              backgroundColor: theme.backgroundColor, // [ZUDDL] iOS viewBackgroundColor
               body: CustomScrollView(
                 controller: state.scrollController,
                 slivers: <Widget>[

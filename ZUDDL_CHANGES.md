@@ -76,3 +76,21 @@ Requested 2026-11-25 after comparing with native iOS on prod.
   header has back; community settings stay hidden.
 - `amity_community_profile_page.dart`: no collapsed community-name bar (`_zuddlShowsCollapsedBar`);
   the tab row is pinned at the top on scroll (`_PinnedTabsDelegate`, 48 pt).
+
+## F1: host theme and font
+
+portal-flutter sets the feed colours from the event theme, like iOS `AppManager.setupTheme`.
+
+- `lib/v4/core/config_repository.dart`: `applyZuddlTheme(light:, dark:)` stores host colours apart
+  from `_config`, so the first `loadConfig()` can't wipe them. `_applyConfig()` merges them over the
+  config's `theme` block (`_effectiveTheme`), and both `getTheme()` and `resolveToken()` read that.
+  `themeChanges` fires on a host colour or preferred style change.
+- `lib/v4/utils/config_provider.dart`: listens to `themeChanges`, so new host colours re-theme the tree.
+- `lib/v4/core/theme.dart`: `commentBackgroundColor`, from the `comment_background` key; falls back
+  to `base_shade4`.
+- `comment_item.dart`: the two comment bubble fills use `commentBackgroundColor`. Dividers and
+  borders stay on `baseColorShade4`.
+- `amity_community_profile_page.dart`: page background is `backgroundColor` (iOS `viewBackgroundColor`).
+- Fonts: removed the hardcoded `fontFamily: 'SF Pro Text'` outside `story/` (`styles.dart`,
+  comments, reactions, search, community feed and pin), so text inherits the host app's font.
+- Test: `test/v4/core/theme/zuddl_host_theme_test.dart`.

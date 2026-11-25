@@ -13,8 +13,7 @@ class ConfigProvider extends ChangeNotifier {
   // repository's change to every base page/component/element that watches this
   // provider, re-theming the whole UIKit tree.
   ConfigProvider() {
-    _configRepository.preferredThemeNotifier
-        .addListener(_onPreferredThemeChanged);
+    _configRepository.themeChanges.addListener(_onPreferredThemeChanged);
   }
 
   void _onPreferredThemeChanged() {
@@ -33,8 +32,7 @@ class ConfigProvider extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
-    _configRepository.preferredThemeNotifier
-        .removeListener(_onPreferredThemeChanged);
+    _configRepository.themeChanges.removeListener(_onPreferredThemeChanged);
     super.dispose();
   }
 

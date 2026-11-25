@@ -49,8 +49,8 @@ class AmityTextStyle {
   // At the moment, i don't want to apply it everywhere because it might cause issue of font size. So, we apply it only where it is necessary.
   static TextStyle getStyle(
       double fontSize, FontWeight fontWeight, Color color, double? textHeight) {
+    // [ZUDDL] No fontFamily here or elsewhere: text inherits the host app's font.
     return TextStyle(
-      fontFamily: 'SF Pro Text',
       fontSize: fontSize,
       fontWeight: fontWeight,
       height: textHeight,

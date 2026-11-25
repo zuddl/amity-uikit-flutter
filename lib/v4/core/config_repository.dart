@@ -32,18 +32,38 @@ class ConfigRepository {
     preferredThemeNotifier.value = style;
   }
 
+  // [ZUDDL] Host colours per style ('light' / 'dark'). Kept apart from
+  // _config, which the first loadConfig() replaces wholesale.
+  Map<String, Map<String, String>> _hostTheme = const {};
+  final ValueNotifier<int> _hostThemeVersion = ValueNotifier(0);
+
+  /// [ZUDDL] Fires when the preferred style or the host colours change.
+  late final Listenable themeChanges =
+      Listenable.merge([preferredThemeNotifier, _hostThemeVersion]);
+
+  /// [ZUDDL] Host colours by config key (`primary_color`, `comment_background`,
+  /// ...). They win over config.json, whichever is applied first.
+  void applyZuddlTheme(
+      {required Map<String, String> light, required Map<String, String> dark}) {
+    _hostTheme = {'light': Map.of(light), 'dark': Map.of(dark)};
+    _applyConfig();
+    _hostThemeVersion.value++;
+  }
+
+  /// [ZUDDL] The config's theme block with the host colours merged over it.
+  Map<String, Map<String, dynamic>> _effectiveTheme = const {};
+
   /// Resolved themes, keyed by config id + resolved theme style. See [getTheme].
   final Map<String, AmityThemeColor> _themeCache = {};
 
   /// The vendored semantic-token table. Empty until [loadConfig] runs, which
   /// makes every token resolve to magenta rather than to a plausible colour.
-  AmityTokenTable _tokenTable =
-      const AmityTokenTable(alias: {}, semantic: {});
+  AmityTokenTable _tokenTable = const AmityTokenTable(alias: {}, semantic: {});
 
   /// The effective config the token resolver reads: the host's theme block
   /// backfilled from the bundled defaults, plus the per-scope customizations.
-  AmityTokenConfig _tokenConfig = const AmityTokenConfig(
-      theme: kAmityThemeDefaults, customizations: {});
+  AmityTokenConfig _tokenConfig =
+      const AmityTokenConfig(theme: kAmityThemeDefaults, customizations: {});
 
   /// Resolved token colours: scope -> token index -> [light, dark].
   /// See [resolveToken].
@@ -79,6 +99,17 @@ class ConfigRepository {
   /// a new config changes what those keys resolve TO, so both are dropped here.
   void _applyConfig() {
     excludedList = Set<String>.from(_config['excludes'] ?? []);
+    _effectiveTheme = {
+      for (final mode in {
+        ...?(_config['theme'] as Map?)?.keys,
+        ..._hostTheme.keys
+      })
+        '$mode': {
+          ...?((_config['theme'] as Map?)?[mode] as Map?)
+              ?.cast<String, dynamic>(),
+          ...?_hostTheme['$mode'],
+        },
+    };
     _tokenConfig = _buildTokenConfig();
     _themeCache.clear();
     _tokenCache.clear();
@@ -94,8 +125,8 @@ class ConfigRepository {
         const {};
 
     final theme = <String, Map<String, String>>{};
-    (_config['theme'] as Map?)?.forEach((mode, keys) {
-      theme['$mode'] = hexes(keys);
+    _effectiveTheme.forEach((mode, keys) {
+      theme[mode] = hexes(keys);
     });
 
     // customizations["<scope>"]["theme"]["<mode>"] -> the resolver wants
@@ -218,7 +249,8 @@ extension ThemeConfig on ConfigRepository {
     // building '$scope|$mode|$path' allocated a String on every one of them,
     // hit or miss. Two map lookups and no allocation instead.
     final byToken = _tokenCache
-        .putIfAbsent(scopeId ?? ConfigRepository._globalScope, () => <int, List<Color?>>{})
+        .putIfAbsent(scopeId ?? ConfigRepository._globalScope,
+            () => <int, List<Color?>>{})
         .putIfAbsent(token.index, () => List<Color?>.filled(2, null));
     final slot = isLight ? 0 : 1;
     return byToken[slot] ??= amityTokenColor(AmityTokenResolver.resolveToken(
@@ -296,8 +328,8 @@ extension ThemeConfig on ConfigRepository {
   }
 
   AmityTheme? _getGlobalTheme(AmityThemeStyle style, AmityTheme fallbackTheme) {
-    final globalTheme = _config['theme']?[style.toString().split('.').last]
-        as Map<String, dynamic>?;
+    // [ZUDDL] Reads the merged theme so host colours reach getTheme() too.
+    final globalTheme = _effectiveTheme[style.toString().split('.').last];
     if (globalTheme != null) {
       return AmityTheme.fromJson(globalTheme, fallbackTheme);
     }
@@ -319,6 +351,9 @@ extension ThemeConfig on ConfigRepository {
           theme?.baseInverseColor ?? fallbackTheme.baseInverseColor,
       backgroundShade1Color: fallbackTheme.backgroundShade1Color,
       highlightColor: theme?.highlightColor ?? fallbackTheme.highlightColor,
+      commentBackgroundColor: theme?.commentBackgroundColor ??
+          theme?.baseColorShade4 ??
+          fallbackTheme.baseColorShade4,
     );
   }
 
@@ -331,7 +366,8 @@ extension ThemeConfig on ConfigRepository {
     // skeleton was #A7A7A7, a light grey block on a #191919 sheet
     // (PDT-5151). Deriving both modes from the token keeps them in step with
     // the palette instead of drifting again.
-    final base = resolveToken(null, AmityColorToken.surfaceSkeletonEffectDefault);
+    final base =
+        resolveToken(null, AmityColorToken.surfaceSkeletonEffectDefault);
     return LinearGradient(
       colors: [
         base.withOpacity(0.3),
