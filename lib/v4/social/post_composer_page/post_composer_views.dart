@@ -12,6 +12,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_file.dart';
 
 extension PostComposerView on AmityPostComposerPage {
   AppBar buildAppBar(BuildContext context) {
@@ -99,6 +100,12 @@ extension PostComposerView on AmityPostComposerPage {
 
   Widget mediaListView(
       BuildContext context, Map<String, AmityFileInfoWithUploadStatus> files) {
+    // [ZUDDL] File post: a row per file with its upload state, as native iOS.
+    if (files.isNotEmpty && files.values.first.type == FileType.any) {
+      return Column(children: [
+        for (final f in files.entries) _zuddlFileRow(context, f),
+      ]);
+    }
     switch (files.length) {
       case 0:
         return Container();
@@ -137,6 +144,73 @@ extension PostComposerView on AmityPostComposerPage {
           },
         );
     }
+  }
+
+  Widget _zuddlFileRow(
+      BuildContext context, MapEntry<String, AmityFileInfoWithUploadStatus> f) {
+    final status = f.value;
+    final name = status.name ?? f.key.split(Platform.pathSeparator).last;
+    final bytes = File(f.key).existsSync() ? File(f.key).lengthSync() : null;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+              color: status.isError ? theme.alertColor : theme.baseColorShade4),
+        ),
+        child: Row(children: [
+          SvgPicture.asset(
+            zuddlFileIcon(name.contains('.') ? name.split('.').last : null, null),
+            package: 'amity_uikit_beta_service',
+            width: 34,
+            height: 40,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: theme.baseColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600)),
+                if (bytes != null)
+                  Text(zuddlFileSize(bytes),
+                      style: TextStyle(
+                          color: theme.baseColorShade2, fontSize: 13)),
+                if (!status.isUploaded && !status.isError)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: LinearProgressIndicator(
+                      value: status.progress / 100.0,
+                      color: theme.primaryColor,
+                      backgroundColor: theme.baseColorShade4,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/Icons/amity_ic_close_button.svg',
+              package: 'amity_uikit_beta_service',
+              width: 20,
+              height: 20,
+              colorFilter:
+                  ColorFilter.mode(theme.baseColorShade2, BlendMode.srcIn),
+            ),
+            onPressed: () => context
+                .read<PostComposerBloc>()
+                .add(PostComposerDeleteFileEvent(filePath: f.key)),
+          ),
+        ]),
+      ),
+    );
   }
 
   Widget _mediaView(BuildContext context,

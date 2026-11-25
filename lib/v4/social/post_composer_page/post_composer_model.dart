@@ -42,6 +42,8 @@ class AmityFileInfoWithUploadStatus {
   Uint8List? videoThumbnail;
   FileType type = FileType.image;
   String? uploadedUrl;
+  // [ZUDDL] A picked file's name, for file posts.
+  String? name;
 
   void addFile(
       {AmityFileInfo? amityFileInfo,

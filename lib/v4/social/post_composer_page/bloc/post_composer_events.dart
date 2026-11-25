@@ -99,3 +99,13 @@ class PostComposerGetVideoUrlsEvent extends PostComposerEvent {
   @override
   List<Object> get props => [videos];
 }
+/// [ZUDDL] A file picked for a file post. [name] shows while it uploads.
+class PostComposerSelectDocumentEvent extends PostComposerEvent {
+  const PostComposerSelectDocumentEvent({required this.path, required this.name});
+
+  final String path;
+  final String name;
+
+  @override
+  List<Object> get props => [path, name];
+}

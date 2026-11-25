@@ -2333,5 +2333,37 @@
   "chat_report_submit": "Submit",
   "@chat_report_submit": {
     "description": "Submit button on the report-message sheet (Android: amity_chat_report_submit)"
+  },
+  "zuddl_post_attachment": "Attachment",
+  "@zuddl_post_attachment": {
+    "description": "[ZUDDL] Composer option to attach a file (iOS: Attachment)"
+  },
+  "zuddl_post_view_all_files": "View all files",
+  "@zuddl_post_view_all_files": {
+    "description": "[ZUDDL] Under a file post's first five files (iOS: view_all_files_title)"
+  },
+  "zuddl_file_too_large_title": "Unable to attach the file",
+  "@zuddl_file_too_large_title": {
+    "description": "[ZUDDL] Alert title when a picked file is over 1 GB (iOS AmityFilePicker)"
+  },
+  "zuddl_file_too_large_message": "The selected file is larger than 1GB. Please select a new file.",
+  "@zuddl_file_too_large_message": {
+    "description": "[ZUDDL] Alert message when a picked file is over 1 GB"
+  },
+  "zuddl_files_limit_title": "Maximum number of files exceeded",
+  "@zuddl_files_limit_title": {
+    "description": "[ZUDDL] Alert title when more than 10 files are picked (iOS AmityFilePicker)"
+  },
+  "zuddl_files_limit_message": "Maximum number of files that can be uploaded is 10. The rest files will be discarded.",
+  "@zuddl_files_limit_message": {
+    "description": "[ZUDDL] Alert message when more than 10 files are picked"
+  },
+  "zuddl_camera_unavailable_title": "Camera isn't available",
+  "@zuddl_camera_unavailable_title": {
+    "description": "[ZUDDL] Shown when the device has no camera (simulator)"
+  },
+  "zuddl_camera_unavailable_message": "This device has no camera. Pick a photo or video instead.",
+  "@zuddl_camera_unavailable_message": {
+    "description": "[ZUDDL] Shown when the device has no camera"
   }
 }

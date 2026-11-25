@@ -11,6 +11,8 @@ class AmityMediaAttachmentComponent extends NewBaseComponent {
   final Function()? onCameraTap;
   final Function()? onImageTap;
   final Function()? onVideoTap;
+  // [ZUDDL] Attach a file, as native iOS's Attachment.
+  final Function()? onFileTap;
   final FileType? mediaType;
 
   AmityMediaAttachmentComponent({
@@ -18,6 +20,7 @@ class AmityMediaAttachmentComponent extends NewBaseComponent {
     this.onCameraTap,
     this.onImageTap,
     this.onVideoTap,
+    this.onFileTap,
     this.mediaType,
   }) : super(key: key, componentId: "media_attachment");
 
@@ -35,7 +38,7 @@ class AmityMediaAttachmentComponent extends NewBaseComponent {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              if (isImagePostEnabled || isVideoPostEnabled)
+              if ((isImagePostEnabled || isVideoPostEnabled) && mediaType != FileType.any)
                 IconButton(
                   icon: SvgPicture.asset(
                     'assets/Icons/amity_ic_camera_button.svg',
@@ -76,6 +79,17 @@ class AmityMediaAttachmentComponent extends NewBaseComponent {
                       onVideoTap!();
                     }
                   },
+                ),
+              // [ZUDDL] Attachment, last in the row as native iOS.
+              if (mediaType == FileType.any || mediaType == null)
+                IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/Icons/zuddl_ic_attach_button.svg',
+                    package: 'amity_uikit_beta_service',
+                    width: 32,
+                    height: 32,
+                  ),
+                  onPressed: () => onFileTap?.call(),
                 ),
             ],
           ),

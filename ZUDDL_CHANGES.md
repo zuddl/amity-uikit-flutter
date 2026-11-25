@@ -138,3 +138,29 @@ What attendees can do matches the native apps.
   (5b66f3b, e54bdb2). Known tags only; script and style bodies dropped; entities decoded.
 - `community_header_component.dart`: the description shows through it.
 - Test: `test/v4/utils/zuddl_html_test.dart`.
+
+## File posts (MOB-1822)
+
+Native iOS posts and shows files; the 4.22 UIKit did neither, so a native file post showed only
+its text.
+
+- Show: `lib/v4/social/post/common/post_children_content_file.dart` (`PostContentFile`), used by
+  `post_item.dart` (feed: first five files, then "View all files" opens the post) and
+  `post_children_content.dart` (post detail: every file). A row is the type icon, name and size;
+  a tap opens the file. iOS downloads it and offers to save instead. `fileInfo` is read guarded,
+  because the SDK leaves it unset until the file is cached.
+- Attach: an Attachment option (`zuddl_ic_attach_button.svg`, paperclip from portal-ios
+  `icon_attach.pdf`) in both composer bars, last in the row and before Video in the list, as iOS.
+  `pickDocuments` in `post_composer_file_picker.dart`: system file picker, up to 10 files, each up
+  to 1 GB (iOS `AmityFilePicker`), with iOS's two alerts. Upload with `uploadFile`
+  (`PostComposerSelectDocumentEvent`), a row per file with progress in the composer, and
+  `dataTypeSelector.file(...)` to post. Camera, Photo and Video hide once a file is picked, as
+  images and videos already do.
+- `lib/v4/utils/zuddl_file.dart`: limits, the extension/MIME to icon map and the size format,
+  ported from iOS. Icons `assets/Icons/zuddl_ic_file_*.svg` are converted from portal-ios
+  ASC-UIKit `icon_file_*.pdf`.
+- Composer sheet `maxBottomSheetSize` 0.32 → 0.38 so the fourth row fits.
+- No camera (a simulator): `post_camera_screen.dart` says "Camera isn't available" instead of
+  closing silently.
+- New `lib/l10n/intl_en.arb` strings (`zuddl_*`), generated files updated.
+- Test: `test/v4/social/post/zuddl_file_post_test.dart`.

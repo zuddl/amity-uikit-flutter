@@ -3290,6 +3290,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit'**
   String get chat_report_submit;
+
+  /// [ZUDDL] Composer option to attach a file (iOS: Attachment)
+  ///
+  /// In en, this message translates to:
+  /// **'Attachment'**
+  String get zuddl_post_attachment;
+
+  /// [ZUDDL] Under a file post's first five files (iOS: view_all_files_title)
+  ///
+  /// In en, this message translates to:
+  /// **'View all files'**
+  String get zuddl_post_view_all_files;
+
+  /// [ZUDDL] Alert title when a picked file is over 1 GB (iOS AmityFilePicker)
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to attach the file'**
+  String get zuddl_file_too_large_title;
+
+  /// [ZUDDL] Alert message when a picked file is over 1 GB
+  ///
+  /// In en, this message translates to:
+  /// **'The selected file is larger than 1GB. Please select a new file.'**
+  String get zuddl_file_too_large_message;
+
+  /// [ZUDDL] Alert title when more than 10 files are picked (iOS AmityFilePicker)
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum number of files exceeded'**
+  String get zuddl_files_limit_title;
+
+  /// [ZUDDL] Alert message when more than 10 files are picked
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum number of files that can be uploaded is 10. The rest files will be discarded.'**
+  String get zuddl_files_limit_message;
+
+  /// [ZUDDL] Shown when the device has no camera (simulator)
+  ///
+  /// In en, this message translates to:
+  /// **'Camera isn\'t available'**
+  String get zuddl_camera_unavailable_title;
+
+  /// [ZUDDL] Shown when the device has no camera
+  ///
+  /// In en, this message translates to:
+  /// **'This device has no camera. Pick a photo or video instead.'**
+  String get zuddl_camera_unavailable_message;
 }
 
 class _AppLocalizationsDelegate

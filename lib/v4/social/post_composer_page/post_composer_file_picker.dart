@@ -4,7 +4,9 @@ import 'package:amity_uikit_beta_service/v4/core/toast/amity_uikit_toast.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/bloc/amity_uikit_toast_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/bloc/post_composer_bloc.dart';
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_composer_page.dart';
+import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/utils/amity_dialog.dart';
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_file.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,40 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path/path.dart' as path;
 
 extension PostComposerFilePicker on AmityPostComposerPage {
+  // [ZUDDL] Files for a file post, as native iOS AmityFilePicker: up to
+  // 10, each up to 1 GB. The system picker needs no permission.
+  Future<void> pickDocuments(BuildContext context) async {
+    final l10n = context.l10n;
+    List<PlatformFile> picked;
+    try {
+      picked = await FilePicker.pickFiles(type: FileType.any);
+    } catch (_) {
+      return;
+    }
+    picked = picked.where((f) => f.path != null).toList();
+    if (picked.isEmpty || !context.mounted) return;
+    if (picked.any((f) => File(f.path!).lengthSync() > zuddlMaxFileBytes)) {
+      AmityV4Dialog().showAlertErrorDialog(
+          title: l10n.zuddl_file_too_large_title,
+          message: l10n.zuddl_file_too_large_message,
+          closeText: l10n.general_close);
+      return;
+    }
+    final room = zuddlMaxPostFiles - selectedFiles.length;
+    if (picked.length > room) {
+      AmityV4Dialog().showAlertErrorDialog(
+          title: l10n.zuddl_files_limit_title,
+          message: l10n.zuddl_files_limit_message,
+          closeText: l10n.general_close);
+      picked = picked.take(room < 0 ? 0 : room).toList();
+    }
+    for (final f in picked) {
+      context
+          .read<PostComposerBloc>()
+          .add(PostComposerSelectDocumentEvent(path: f.path!, name: f.name));
+    }
+  }
+
   /// Converts HEIC/HEIF XFile images to JPG format
   /// Returns the original XFile if it's not HEIC/HEIF or if conversion fails
   Future<XFile> _convertHeicXFileToJpgIfNeeded(XFile xFile) async {

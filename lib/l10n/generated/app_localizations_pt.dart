@@ -1880,6 +1880,33 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get chat_report_submit => 'Submit';
+
+  @override
+  String get zuddl_post_attachment => 'Attachment';
+
+  @override
+  String get zuddl_post_view_all_files => 'View all files';
+
+  @override
+  String get zuddl_file_too_large_title => 'Unable to attach the file';
+
+  @override
+  String get zuddl_file_too_large_message =>
+      'The selected file is larger than 1GB. Please select a new file.';
+
+  @override
+  String get zuddl_files_limit_title => 'Maximum number of files exceeded';
+
+  @override
+  String get zuddl_files_limit_message =>
+      'Maximum number of files that can be uploaded is 10. The rest files will be discarded.';
+
+  @override
+  String get zuddl_camera_unavailable_title => 'Camera isn\'t available';
+
+  @override
+  String get zuddl_camera_unavailable_message =>
+      'This device has no camera. Pick a photo or video instead.';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).

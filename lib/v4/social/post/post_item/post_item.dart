@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/social/post/common/post_children_content_file.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/amity_uikit.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
@@ -232,6 +233,10 @@ class PostItem extends NewBaseComponent {
           theme: theme,
           hideMenu: hideMenu,
           goToDetail: goToDetail);
+    } else if (post.children!.first.data is FileData) {
+      // [ZUDDL] File posts, as native iOS; see post_children_content_file.dart.
+      return PostContentFile(
+          posts: post.children!, theme: theme, onViewAll: () => goToDetail());
     } else {
       return Container();
     }

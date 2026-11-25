@@ -56,7 +56,13 @@ class _AmityPostCameraScreenState extends State<AmityPostCameraScreen> {
       
       if (cameras == null || cameras!.isEmpty) {
         if (mounted) {
+          // [ZUDDL] Say why, instead of closing silently (a simulator has no camera).
+          final l10n = context.l10n;
           Navigator.of(context).pop();
+          AmityV4Dialog().showAlertErrorDialog(
+              title: l10n.zuddl_camera_unavailable_title,
+              message: l10n.zuddl_camera_unavailable_message,
+              closeText: l10n.general_close);
         }
         return;
       }

@@ -10,6 +10,8 @@ class AmityDetailedMediaAttachmentComponent extends NewBaseComponent {
   final Function()? onCameraTap;
   final Function()? onImageTap;
   final Function()? onVideoTap;
+  // [ZUDDL] Attach a file, as native iOS's Attachment.
+  final Function()? onFileTap;
   final FileType? mediaType;
 
   AmityDetailedMediaAttachmentComponent({
@@ -17,6 +19,7 @@ class AmityDetailedMediaAttachmentComponent extends NewBaseComponent {
     this.onCameraTap,
     this.onImageTap,
     this.onVideoTap,
+    this.onFileTap,
     this.mediaType,
   }) : super(key: key, componentId: "detailed_media_attachment");
 
@@ -59,7 +62,7 @@ class AmityDetailedMediaAttachmentComponent extends NewBaseComponent {
       children: [
         Column(
           children: [
-            if ((isVideoPostEnabled || isImagePostEnabled)) 
+            if ((isVideoPostEnabled || isImagePostEnabled) && mediaType != FileType.any) 
               _buildListTile(
                 assetPath: 'assets/Icons/amity_ic_camera_button.svg',
                 title: context.l10n.general_camera,
@@ -70,6 +73,13 @@ class AmityDetailedMediaAttachmentComponent extends NewBaseComponent {
                 assetPath: 'assets/Icons/amity_ic_image_button.svg',
                 title: context.l10n.general_photo,
                 onTap: onImageTap,
+              ),
+            // [ZUDDL] Attachment, before Video as native iOS's list.
+            if (mediaType == FileType.any || mediaType == null)
+              _buildListTile(
+                assetPath: 'assets/Icons/zuddl_ic_attach_button.svg',
+                title: context.l10n.zuddl_post_attachment,
+                onTap: onFileTap,
               ),
             if ((mediaType == FileType.video || mediaType == null) && isVideoPostEnabled)
               _buildListTile(

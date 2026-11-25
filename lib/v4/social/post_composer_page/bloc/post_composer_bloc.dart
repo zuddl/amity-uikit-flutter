@@ -39,6 +39,9 @@ class PostComposerBloc extends Bloc<PostComposerEvent, PostComposerState> {
             .uploadVideo(file, feedtype: AmityContentFeedType.POST);
       } else if (type == FileType.image) {
         client = AmityCoreClient.newFileRepository().uploadImage(file);
+      } else if (type == FileType.any) {
+        // [ZUDDL] A file for a file post, as native iOS.
+        client = AmityCoreClient.newFileRepository().uploadFile(file);
       }
 
       if (client != null) {
@@ -109,6 +112,14 @@ class PostComposerBloc extends Bloc<PostComposerEvent, PostComposerState> {
         ..addFile(type: FileType.video);
       files[event.selectedVideos.path] = video;
       handleUploadFile(event.selectedVideos.path, FileType.video);
+    });
+
+    // [ZUDDL] A picked file (any type) for a file post.
+    on<PostComposerSelectDocumentEvent>((event, emit) async {
+      files[event.path] = AmityFileInfoWithUploadStatus()
+        ..addFile(type: FileType.any)
+        ..name = event.name;
+      handleUploadFile(event.path, FileType.any);
     });
 
     on<PostComposerDeleteFileEvent>((event, emit) async {

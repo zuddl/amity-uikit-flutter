@@ -148,6 +148,10 @@ class AmityPostComposerPage extends NewBasePage {
                 } else if (selectedFiles.entries.first.value.type ==
                     FileType.image) {
                   selectedMediaType = FileType.image;
+                } else if (selectedFiles.entries.first.value.type ==
+                    FileType.any) {
+                  // [ZUDDL] File post.
+                  selectedMediaType = FileType.any;
                 }
                 if (currentUrlsCount != selectedFiles.length) {
                   isFileCountChanged = true;
@@ -160,7 +164,8 @@ class AmityPostComposerPage extends NewBasePage {
               updatePostButtonStatus();
             }
 
-            double maxBottomSheetSize = 0.32;
+            // [ZUDDL] 0.38: room for a fourth row, Attachment.
+            double maxBottomSheetSize = 0.38;
             double minBottomSheetSize = 0.2;
             if (selectedMediaType != null) {
               maxBottomSheetSize = 0.28;
@@ -216,6 +221,7 @@ class AmityPostComposerPage extends NewBasePage {
                         pickMultipleFiles(context, FileType.video,
                             maxFiles: 10);
                       },
+                      onFileTap: () => pickDocuments(context),
                       mediaType: selectedMediaType,
                     ),
                     expandedContent: AmityDetailedMediaAttachmentComponent(
@@ -230,6 +236,7 @@ class AmityPostComposerPage extends NewBasePage {
                           pickMultipleFiles(context, FileType.video,
                               maxFiles: 10);
                         },
+                        onFileTap: () => pickDocuments(context),
                         mediaType: selectedMediaType),
                   ),
                 ],
@@ -584,7 +591,15 @@ class AmityPostComposerPage extends NewBasePage {
     PostCreator postCreatorBuilder;
 
     if (selectedFiles.isNotEmpty) {
-      if (selectedMediaType == FileType.video) {
+      if (selectedMediaType == FileType.any) {
+        // [ZUDDL] File post, as native iOS.
+        final files = [
+          for (final f in selectedFiles.values)
+            AmityFile(f.fileInfo!.getFileProperties!)
+        ];
+        postCreatorBuilder =
+            dataTypeSelector.file(files).text(textController.text);
+      } else if (selectedMediaType == FileType.video) {
         List<AmityVideo> videos = [];
 
         for (var amityVideo in selectedFiles.entries) {
