@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_flags.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/social/community/profile/amity_community_profile_page.dart';
 import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_composer_model.dart';
@@ -24,6 +25,8 @@ class AmityPostContentComponentBehavior {
     BuildContext context,
     String userId,
   ) {
+    // [ZUDDL] See zuddl_flags.dart.
+    if (!zuddlOpensUserProfiles) return;
     Navigator.push(
       context,
       MaterialPageRoute(

@@ -109,3 +109,27 @@ uploaded to Amity, so every avatar showed initials. Both natives read the custom
   half the circle's width. It matches portal-flutter's speaker avatar in session details, instead of
   Amity's one-letter disc. Used by `AmityUserAvatar` and `AmityUserImage`.
 - Test: `test/v4/utils/zuddl_avatar_test.dart`.
+
+## F6: parity hides (MOB-1822)
+
+What attendees can do matches the native apps.
+
+- `assets/config/config.json`: live-stream and clip creation off (story creation was already off).
+  Text, image, video and poll creation stay on; existing polls, live streams and clips still show.
+- `lib/v4/utils/zuddl_flags.dart`: `zuddlOpensUserProfiles` and `zuddlOpensMemberList`, both false.
+  - Every `goToUserProfilePage` behaviour returns early (post content, comments, reactions through
+    post content, pending posts, members, follow lists, search, global feed), and so does the
+    mention tap in `post_content_text.dart`. As iOS 112d83a, 6ca68c3, f2ae9ba. The user profile's
+    pending, blocked and follow pages are only reachable from a profile, so they are gone too.
+  - `community_info_view.dart`: the member count is not a link (iOS 96d9dce).
+- `amity_community_profile_page.dart`: the pending-posts banner shows to moderators only (iOS 84c226e).
+- Already true in 4.22, no patch: no share action (the share button is never shown); no options
+  menu or back button on the cover (F6 part, earlier).
+- Test: `test/v4/zuddl_parity_test.dart`.
+
+## F7: community description HTML
+
+- `lib/v4/utils/zuddl_html.dart`: `zuddlHtmlToPlainText`, ported from iOS `htmlToPlainText`
+  (5b66f3b, e54bdb2). Known tags only; script and style bodies dropped; entities decoded.
+- `community_header_component.dart`: the description shows through it.
+- Test: `test/v4/utils/zuddl_html_test.dart`.

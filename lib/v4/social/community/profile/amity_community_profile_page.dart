@@ -222,6 +222,8 @@ class AmityCommunityProfilePage extends NewBasePage {
                   SliverToBoxAdapter(
                     child: (state.community != null &&
                             state.isJoined &&
+                            // [ZUDDL] Members never see pending posts (iOS 84c226e).
+                            state.isModerator &&
                             state.pendingPostCount > 0 &&
                             (state.community!.isPostReviewEnabled ?? false))
                         ? Container(

@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_html.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_component.dart';
 import 'package:amity_uikit_beta_service/v4/social/community/profile/bloc/community_profile_bloc.dart';
@@ -66,7 +67,9 @@ class AmityCommunityHeaderComponent extends NewBaseComponent {
                                   builder: (context, state) {
                                     return AmityExpandableText(
                                       theme: theme,
-                                      text: community?.description ?? "",
+                                      // [ZUDDL] The description can be HTML; see zuddl_html.dart.
+                                      text: zuddlHtmlToPlainText(
+                                          community?.description ?? ""),
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,

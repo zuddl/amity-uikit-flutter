@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_flags.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart';
 import 'package:amity_uikit_beta_service/v4/core/ui/expandable_text.dart';
@@ -70,6 +71,8 @@ class PostContentText extends StatelessWidget {
   }
 
   void _goToUserProfilePage(BuildContext context, String userId) {
+    // [ZUDDL] See zuddl_flags.dart.
+    if (!zuddlOpensUserProfiles) return;
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => AmityUserProfilePage(userId: userId)));
   }

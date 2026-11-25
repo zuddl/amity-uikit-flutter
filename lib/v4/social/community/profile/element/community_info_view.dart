@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/v4/utils/zuddl_flags.dart';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_element.dart';
@@ -44,13 +45,15 @@ class AmityCommunityInfoView extends BaseElement {
         ),
         const SizedBox(width: 16),
         GestureDetector(
+          // [ZUDDL] See zuddl_flags.dart.
           onTap: () => {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    AmityCommunityMembershipPage(community: community),
+            if (zuddlOpensMemberList)
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      AmityCommunityMembershipPage(community: community),
+                ),
               ),
-            ),
           },
           child: Row(
             children: [
