@@ -34,4 +34,7 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
 ## F8: dependencies aligned with portal-flutter
 
 - `permission_handler` `^12.0.1` → `^13.0.2`, `cached_network_image` `^3.4.1` → `^4.0.3`.
-  (portal-flutter raises its own `package_info_plus` and `device_info_plus` to match ours.)
+- `file_picker` `12.0.0-beta.7` → `^13.4.1`. The beta pulled `win32` 6 and `dbus` 0.7, which clash with
+  portal-flutter's `connectivity_plus`. v13 `pickFiles()` returns a list and always allows several
+  files, so the 3 call sites changed (`post_composer_file_picker.dart`, `create_postV2_viewmodel.dart`).
+  (portal-flutter raises its own `package_info_plus`, `device_info_plus` and `share_plus` to match.)

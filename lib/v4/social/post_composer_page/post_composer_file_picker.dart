@@ -58,13 +58,10 @@ extension PostComposerFilePicker on AmityPostComposerPage {
           typeText = 'videos';
 
           pickVideos() async {
-            FilePickerResult? result = await FilePicker.pickFiles(
+            // [ZUDDL] file_picker 13: returns a list and always allows many.
+            final List<PlatformFile> result = await FilePicker.pickFiles(
               type: type,
-              allowMultiple: true,
               compressionQuality: 95,
-              withData: false,
-              withReadStream: true,
-              lockParentWindow: true,
               onFileLoading: (status) => {
                 if (status == FilePickerStatus.done)
                   {context.read<AmityToastBloc>().add(AmityToastDismiss())}
@@ -76,8 +73,8 @@ extension PostComposerFilePicker on AmityPostComposerPage {
               },
             );
 
-            if (result != null) {
-              files = result.files
+            if (result.isNotEmpty) {
+              files = result
                   .where((file) => file.path != null)
                   .map((file) => XFile(file.path!))
                   .toList();
@@ -185,13 +182,10 @@ extension PostComposerFilePicker on AmityPostComposerPage {
 
         try {
           pickFiles() async {
-            FilePickerResult? result = await FilePicker.pickFiles(
+            // [ZUDDL] file_picker 13: returns a list and always allows many.
+            final List<PlatformFile> result = await FilePicker.pickFiles(
               type: type,
-              allowMultiple: true,
               compressionQuality: 95,
-              withData: false,
-              withReadStream: true,
-              lockParentWindow: true,
               onFileLoading: (status) => {
                 if (status == FilePickerStatus.done)
                   {context.read<AmityToastBloc>().add(AmityToastDismiss())}
@@ -203,8 +197,8 @@ extension PostComposerFilePicker on AmityPostComposerPage {
               },
             );
 
-            if (result != null) {
-              files = result.files
+            if (result.isNotEmpty) {
+              files = result
                   .where((file) => file.path != null)
                   .map((file) => XFile(file.path!))
                   .toList();

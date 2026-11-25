@@ -31,10 +31,9 @@ dependencies:
   path_provider: ^2.0.2
   flutter_video_thumbnail: 0.0.2
   mime: ^2.0.0
-  # Exact pin: 12.0.0 stable (2026-08-14) drops FilePickerResult, which
-  # post_composer_file_picker.dart and create_postV2_viewmodel.dart still use.
-  # ^12.0.0-beta.3 resolves to that stable and breaks every fresh checkout.
-  file_picker: 12.0.0-beta.7
+  # [ZUDDL] file_picker 13: the 12 beta pulled win32 6 / dbus 0.7, which
+  # portal-flutter's share_plus and connectivity_plus cannot share.
+  file_picker: ^13.4.1
   open_file: ^3.5.11
   flutter_svg: ^2.3.0
   permission_handler: ^13.0.2
