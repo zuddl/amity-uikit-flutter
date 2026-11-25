@@ -1,4 +1,3 @@
-
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:amity_uikit_beta_service/v4/core/base_page.dart';
@@ -49,7 +48,8 @@ class AmityCommunityProfilePage extends NewBasePage {
             final featureConfig = configProvider.getFeatureConfig();
 
             return Scaffold(
-              backgroundColor: theme.backgroundColor, // [ZUDDL] iOS viewBackgroundColor
+              backgroundColor:
+                  theme.backgroundColor, // [ZUDDL] iOS viewBackgroundColor
               body: CustomScrollView(
                 controller: state.scrollController,
                 slivers: <Widget>[
@@ -317,11 +317,15 @@ class AmityCommunityProfilePage extends NewBasePage {
                                     SizedBox(
                                       width: 32,
                                       height: 32,
+                                      // [ZUDDL] Pencil, as natives' create-post button.
                                       child: SvgPicture.asset(
-                                        'assets/Icons/amity_ic_plus_button.svg',
+                                        'assets/Icons/amity_ic_create_post_button.svg',
                                         package: 'amity_uikit_beta_service',
                                         width: 32,
                                         height: 32,
+                                        colorFilter: ColorFilter.mode(
+                                            theme.secondaryColor,
+                                            BlendMode.srcIn),
                                       ),
                                     ),
                                   ],
@@ -342,32 +346,35 @@ class AmityCommunityProfilePage extends NewBasePage {
 
   void showActions(BuildContext context, bool canCreateStory,
       AmityCommunity? community, bool isModerator) {
+    void openPostComposer() {
+      final createOptions = AmityPostComposerOptions.createOptions(
+          targetId: communityId,
+          community: community,
+          targetType: AmityPostTargetType.COMMUNITY);
+
+      Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => AmityPostComposerPage(
+          options: createOptions,
+          onPopRequested: (shouldPopCaller) {
+            if (shouldPopCaller) {
+              // Show dialog if post review is enabled and user is not a moderator
+              if (community?.isPostReviewEnabled == true && !isModerator) {
+                _showPostReviewDialog(context);
+              }
+            }
+          },
+        ),
+      ));
+    }
+
     final postOption = BottomSheetMenuOption(
         title: context.l10n.general_post,
         icon: "assets/Icons/amity_ic_create_post_button.svg",
         onTap: () {
           // Dismiss popup
           Navigator.of(context).pop();
-
-          final createOptions = AmityPostComposerOptions.createOptions(
-              targetId: communityId,
-              community: community,
-              targetType: AmityPostTargetType.COMMUNITY);
-
-          Navigator.of(context).push(MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => AmityPostComposerPage(
-              options: createOptions,
-              onPopRequested: (shouldPopCaller) {
-                if (shouldPopCaller) {
-                  // Show dialog if post review is enabled and user is not a moderator
-                  if (community?.isPostReviewEnabled == true && !isModerator) {
-                    _showPostReviewDialog(context);
-                  }
-                }
-              },
-            ),
-          ));
+          openPostComposer();
         });
 
     final storyOption = BottomSheetMenuOption(
@@ -429,6 +436,12 @@ class AmityCommunityProfilePage extends NewBasePage {
 
     if (featureConfig.post.poll.createEnabled) {
       userActions.add(pollOption);
+    }
+
+    // [ZUDDL] Only one choice (post): open the composer straight away, as natives.
+    if (userActions.length == 1 && identical(userActions.first, postOption)) {
+      openPostComposer();
+      return;
     }
 
     BottomSheetMenu(options: userActions).show(context, theme);
@@ -714,7 +727,8 @@ class _PinnedTabsDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 48;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) =>
+  Widget build(
+          BuildContext context, double shrinkOffset, bool overlapsContent) =>
       tabs;
 
   @override

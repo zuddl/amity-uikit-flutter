@@ -3,7 +3,8 @@
     "story": { "create_enabled": false, "view_story_tab_enabled": false },
     "post": {
       "livestream": { "create_enabled": false },
-      "clip": { "create_enabled": false }
+      "clip": { "create_enabled": false },
+      "poll": { "create_enabled": false }
     }
   },
     "preferred_theme": "default",

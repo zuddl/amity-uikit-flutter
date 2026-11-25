@@ -114,8 +114,12 @@ uploaded to Amity, so every avatar showed initials. Both natives read the custom
 
 What attendees can do matches the native apps.
 
-- `assets/config/config.json`: live-stream and clip creation off (story creation was already off).
-  Text, image, video and poll creation stay on; existing polls, live streams and clips still show.
+- `assets/config/config.json`: live-stream, clip and poll creation off (story creation was already
+  off), as native iOS's composer. Text, image and video stay on; existing polls, live streams and
+  clips still show. (Poll off: owner decision 2026-11-25, reversing spec Q1.)
+- `amity_community_profile_page.dart`: the create button is the pencil (`amity_ic_create_post_button`)
+  in `secondary_color`, and opens the post composer straight away when post is the only choice, as
+  natives do. With more choices it still shows the menu.
 - `lib/v4/utils/zuddl_flags.dart`: `zuddlOpensUserProfiles` and `zuddlOpensMemberList`, both false.
   - Every `goToUserProfilePage` behaviour returns early (post content, comments, reactions through
     post content, pending posts, members, follow lists, search, global feed), and so does the

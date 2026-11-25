@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 // [ZUDDL] F6: what attendees can do in the feed matches the native apps.
 void main() {
-  test('creation: text, image, video and poll on; story, live, clip off', () {
+  test('creation: text, image and video on; poll, story, live, clip off', () {
     final config =
         jsonDecode(File('assets/config/config.json').readAsStringSync())
             as Map<String, dynamic>;
@@ -20,7 +20,7 @@ void main() {
     expect(flags.post.text.createEnabled, isTrue);
     expect(flags.post.image.createEnabled, isTrue);
     expect(flags.post.video.createEnabled, isTrue);
-    expect(flags.post.poll.createEnabled, isTrue);
+    expect(flags.post.poll.createEnabled, isFalse);
     expect(flags.post.livestream.createEnabled, isFalse);
     expect(flags.post.clip.createEnabled, isFalse);
     expect(flags.story.createEnabled, isFalse);
