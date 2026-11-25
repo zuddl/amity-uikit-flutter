@@ -59,3 +59,9 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
   `late final`. `didChangeDependencies` runs again when the config finishes loading or the theme
   changes; the second assignment threw `LateInitializationError` and the page showed a red error.
   Found on a real prod community with portal-flutter (2026-11-25).
+
+## Fix: community header height
+
+- `amity_community_profile_page.dart`: the collapsed header uses the real top inset
+  (`MediaQuery.paddingOf(context).top`) instead of a hard-coded 44 (iOS) / 24 (Android). Inside
+  portal-flutter's Feed the inset is 0, and the old value overflowed the bar by 44 px.

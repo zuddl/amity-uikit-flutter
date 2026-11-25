@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
@@ -38,9 +37,9 @@ class AmityCommunityProfilePage extends NewBasePage {
 
   @override
   Widget buildPage(BuildContext context) {
-    final statusBarHeight = Platform.isIOS
-        ? 44.0
-        : 24.0; // iOS status bar height is 44 and android status bar height is 34
+    // [ZUDDL] The real top inset, not a guessed status bar: inside a host
+    // under its own header it is 0, and it changes in landscape.
+    final statusBarHeight = MediaQuery.paddingOf(context).top;
     final appBarHeight = statusBarHeight + 56;
     return BlocProvider(
       create: (context) => CommunityProfileBloc(communityId, _scrollController),
