@@ -1,11 +1,14 @@
-import 'package:amity_uikit_beta_service/v4/chat/message/chat_page.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/amity_uikit_toast.dart';
 import 'package:amity_uikit_beta_service/v4/core/ui/media_viewer_close_button.dart';
 import 'package:amity_uikit_beta_service/v4/core/toast/bloc/amity_uikit_toast_bloc.dart';
 import 'package:amity_uikit_beta_service/l10n/localization_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:provider/provider.dart';
+
+// [ZUDDL] Was AmityChatPage.toastBottomPadding; chat is removed from this fork.
+const double _toastBottomPadding = 56;
 
 class AmityImageViewer extends StatefulWidget {
   final String imageUrl;
@@ -62,7 +65,7 @@ class _AmityImageViewerState extends State<AmityImageViewer> {
                         context.read<AmityToastBloc>().add(AmityToastShort(
                           message: context.l10n.image_load_error,
                           icon: AmityToastIcon.warning,
-                          bottomPadding: AmityChatPage.toastBottomPadding
+                          bottomPadding: _toastBottomPadding
                         ));
                         return Image.asset(
                           'assets/Icons/amity_ic_image_error.png',

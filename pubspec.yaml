@@ -16,7 +16,6 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   flutter_bloc: ^9.1.1
   amity_sdk: ^7.8.8
-  image_gallery_saver_plus: ^4.0.1
   dio: ^5.9.2
   provider: ^6.0.3
   chewie: ^1.14.1
@@ -49,7 +48,6 @@ dependencies:
   device_info_plus: ^13.1.0
   palette_generator: ^0.3.3+7
   connectivity_plus: ^7.1.1
-  photo_manager: ^3.9.0
   diff_match_patch: ^0.4.1
   flutter_image_compress: ^2.4.0
 

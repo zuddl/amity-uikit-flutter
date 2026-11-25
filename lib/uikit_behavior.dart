@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:amity_uikit_beta_service/v4/chat/message/chat_page_behavior.dart';
-import 'package:amity_uikit_beta_service/v4/chat/message/message_bubble_behavior.dart';
 import 'package:amity_uikit_beta_service/v4/social/comment/comment_tray_behavior.dart';
 import 'package:amity_uikit_beta_service/v4/social/community/community_membership/community_membership_page_behavior.dart';
 import 'package:amity_uikit_beta_service/v4/social/community/profile/community_profile_page_behavior.dart';
@@ -51,9 +49,4 @@ class UIKitBehavior {
 
   AmityUserRelationshipPageBehavior userRelationshipPageBehavior =
       AmityUserRelationshipPageBehavior();
-
-  AmityMessageBubbleBehavior messageBubbleBehavior =
-      AmityMessageBubbleBehavior();
-
-  AmityChatPageBehavior chatPageBehavior = AmityChatPageBehavior();
 }

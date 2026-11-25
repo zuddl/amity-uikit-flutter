@@ -3,7 +3,6 @@ import 'dart:io' show Platform;
 import 'package:amity_uikit_beta_service/v4/core/config_repository.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme/amity_color_token.dart';
-import 'package:amity_uikit_beta_service/v4/chat/message/message_bubble_view.dart';
 import 'package:amity_uikit_beta_service/v4/core/ui/mention/mention_dismiss_button.dart';
 import 'package:amity_uikit_beta_service/v4/core/ui/mention/mention_field.dart';
 import 'package:amity_uikit_beta_service/v4/social/top_search_bar/top_search_bar.dart';
@@ -102,34 +101,6 @@ void main() {
     await tester.pumpAndSettle();
     await expectLater(find.byType(AmityMentionDismissButton),
         matchesGoldenFile('proof/pdt5126_dismiss_button.png'));
-  }, skip: !_proofRun);
-
-  testWidgets('PDT-5023 reaction row, middle one already reacted',
-      (tester) async {
-    ReactionItem item(String n, String f, {bool mine = false}) => ReactionItem(
-        reaction: AmityReactionType(
-            name: n, imagePath: 'assets/Icons/amity_ic_${f}_reaction.svg'),
-        isSelected: mine);
-    // At the harness's default 1x, the 32 disc behind a 30 glyph is a single
-    // antialiased pixel of ring — invisible to a colour scan. Render at 3x so
-    // the ring is measurable.
-    tester.view.devicePixelRatio = 3.0;
-    addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(host(
-      ReactionRow(
-        reactions: [
-          item('like', 'like'),
-          item('love', 'heart', mine: true),
-          item('fire', 'fire'),
-        ],
-        onReactionSelected: (_, __) {},
-        theme: ConfigRepository().getTheme(null),
-      ),
-      width: 208,
-      height: 52,
-    ));
-    await expectLater(find.byType(ReactionRow),
-        matchesGoldenFile('proof/pdt5023_reaction_row.png'));
   }, skip: !_proofRun);
 
   testWidgets('PDT-5151 skeleton shimmer', (tester) async {

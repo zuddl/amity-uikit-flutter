@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/uikit_behavior.dart';
 import 'package:amity_uikit_beta_service/l10n/generated/app_localizations.dart';
-import 'package:amity_uikit_beta_service/v4/chat/message/parent_message_cache.dart';
 import 'package:amity_uikit_beta_service/v4/core/config_repository.dart';
 import 'package:amity_uikit_beta_service/v4/core/configuration_viewmodel.dart';
 import 'package:amity_uikit_beta_service/v4/core/theme.dart'
@@ -206,7 +205,6 @@ class AmityUIKit {
 
   void unRegisterDevice() {
     AmityCoreClient.unregisterDeviceNotification();
-    ParentMessageCache().clear();
     AmityCoreClient.logout();
   }
 
