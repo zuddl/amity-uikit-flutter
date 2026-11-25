@@ -164,3 +164,9 @@ its text.
   closing silently.
 - New `lib/l10n/intl_en.arb` strings (`zuddl_*`), generated files updated.
 - Test: `test/v4/social/post/zuddl_file_post_test.dart`.
+
+## F5: feed header hook (MOB-1823)
+
+- `amity_community_profile_page.dart`: optional `zuddlFeedHeader`, shown as a sliver between the
+  pinned tabs and the posts on the Timeline tab only. portal-flutter puts the event's
+  scroll-with-page banner there, as iOS (`1f96d55`, `c79fa55`). With none, nothing changes.

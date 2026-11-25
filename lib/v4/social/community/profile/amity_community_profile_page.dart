@@ -29,7 +29,13 @@ import '../../post_poll_composer_page/post_poll_composer_page.dart';
 
 class AmityCommunityProfilePage extends NewBasePage {
   final String communityId;
-  AmityCommunityProfilePage({super.key, required this.communityId})
+
+  /// [ZUDDL] The host's first feed row on the Timeline tab (the event's
+  /// scroll-with-page banner), as iOS 1f96d55 / c79fa55.
+  final Widget? zuddlFeedHeader;
+
+  AmityCommunityProfilePage(
+      {super.key, required this.communityId, this.zuddlFeedHeader})
       : super(pageId: 'community_profile');
 
   final ScrollController _scrollController = ScrollController();
@@ -254,6 +260,9 @@ class AmityCommunityProfilePage extends NewBasePage {
                       ),
                     ),
                   ),
+                  if (state.selectedIndex == CommunityProfileTabIndex.feed &&
+                      zuddlFeedHeader != null)
+                    SliverToBoxAdapter(child: zuddlFeedHeader),
                   if (state.selectedIndex == CommunityProfileTabIndex.feed)
                     CommunityFeedComponent(
                       communityId: state.communityId,
