@@ -7,7 +7,6 @@ import 'package:amity_uikit_beta_service/v4/social/post_composer_page/post_compo
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_video_thumbnail/flutter_video_thumbnail.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'post_composer_events.dart';
@@ -28,11 +27,9 @@ class PostComposerBloc extends Bloc<PostComposerEvent, PostComposerState> {
       StreamController<AmityUploadResult>? client;
 
       if (type == FileType.video) {
-        final Uint8List? uint8list = await FlutterVideoThumbnail.getThumbnail(
-          file.path,
-          quality: 75,
-          useCache: true,
-        );
+        // [ZUDDL] No local video thumbnail: the plugin ships for CocoaPods
+          // only, and portal-flutter builds iOS with Swift Package Manager.
+          const Uint8List? uint8list = null;
 
         if (uint8list != null && uint8list.isNotEmpty) {
           files[file.path]?.updateThumbnail(uint8list);

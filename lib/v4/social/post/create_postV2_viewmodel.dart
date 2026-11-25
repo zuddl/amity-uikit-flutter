@@ -7,7 +7,6 @@ import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/v4/core/ui/alert_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_video_thumbnail/flutter_video_thumbnail.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 
@@ -150,11 +149,9 @@ class CreatePostVMV2 with ChangeNotifier {
           );
         } else if (mimeType.startsWith('video')) {
           log("Generating thumbnail...");
-          final Uint8List? uint8list = await FlutterVideoThumbnail.getThumbnail(
-            uploadingFile.path,
-            quality: 75,
-            useCache: true,
-          );
+          // [ZUDDL] No local video thumbnail: the plugin ships for CocoaPods
+          // only, and portal-flutter builds iOS with Swift Package Manager.
+          const Uint8List? uint8list = null;
 
           if (uint8list != null && uint8list.isNotEmpty) {
             // Save the generated thumbnail data in the map

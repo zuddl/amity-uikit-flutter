@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_video_thumbnail/flutter_video_thumbnail.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:video_player/video_player.dart';
 
@@ -737,11 +736,8 @@ class _StoryDraftVideoViewState extends State<StoryDraftVideoView> {
 
   Future<void> _generateThumbnail() async {
     try {
-      final thumb = await FlutterVideoThumbnail.getThumbnail(
-        widget.mediaType.file.path,
-        quality: 60,
-        useCache: true,
-      );
+      // [ZUDDL] No local video thumbnail (CocoaPods-only plugin removed).
+      const Uint8List? thumb = null;
 
       if (!mounted || thumb == null) return;
 

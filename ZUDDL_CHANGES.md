@@ -26,6 +26,13 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
 - Locale debug `print`s removed.
 - `registerDevice(context:)` is optional. It was unused, and portal-flutter signs in from its data layer.
 
+## F8b: no local video thumbnails
+
+- `flutter_video_thumbnail` removed: it ships for CocoaPods only, and portal-flutter builds iOS with
+  Swift Package Manager only. `post_composer_bloc.dart`, `create_postV2_viewmodel.dart` and `story_draft_page.dart` skip the
+  thumbnail; the UIKit already shows a placeholder without one. Posted videos use Amity's server
+  thumbnail. (Owner decision 2026-11-25.)
+
 ## F4: `AmityUIKitScope`
 
 - `lib/amity_uikit.dart`: `AmityUIKitScope` provides the same blocs and providers as
