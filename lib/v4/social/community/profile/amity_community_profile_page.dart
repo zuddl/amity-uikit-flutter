@@ -317,12 +317,12 @@ class AmityCommunityProfilePage extends NewBasePage {
                                     SizedBox(
                                       width: 32,
                                       height: 32,
-                                      // [ZUDDL] Pencil, as natives' create-post button.
+                                      // [ZUDDL] Native iOS's create-post pencil (icon_create_post).
                                       child: SvgPicture.asset(
-                                        'assets/Icons/amity_ic_create_post_button.svg',
+                                        'assets/Icons/zuddl_ic_create_post.svg',
                                         package: 'amity_uikit_beta_service',
-                                        width: 32,
-                                        height: 32,
+                                        width: 24,
+                                        height: 24,
                                         colorFilter: ColorFilter.mode(
                                             theme.secondaryColor,
                                             BlendMode.srcIn),
