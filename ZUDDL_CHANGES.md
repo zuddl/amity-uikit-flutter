@@ -52,3 +52,10 @@ Portal uses Zuddl's own chat, so the UIKit chat module is gone.
 - `amity_community_profile_page.dart` and `element/community_cover_view.dart`: the back button uses
   `Navigator.maybePop`, so it does nothing when the community page is the first page of the host's
   navigator (the Feed tab). Hiding it there is slice 3.
+
+## Fix: toast config not final
+
+- `lib/v4/core/toast/amity_uikit_toast.dart`: `configProvider` and `uiConfig` are plain `late`, not
+  `late final`. `didChangeDependencies` runs again when the config finishes loading or the theme
+  changes; the second assignment threw `LateInitializationError` and the page showed a red error.
+  Found on a real prod community with portal-flutter (2026-11-25).

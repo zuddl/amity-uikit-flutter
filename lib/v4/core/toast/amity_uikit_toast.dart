@@ -44,8 +44,10 @@ class AmityToast extends StatefulWidget {
 }
 
 class _AmityToastState extends State<AmityToast> {
-  late final ConfigProvider configProvider;
-  late final AmityUIConfig uiConfig;
+  // [ZUDDL] Not final: didChangeDependencies runs again when the config
+  // finishes loading or the theme changes.
+  late ConfigProvider configProvider;
+  late AmityUIConfig uiConfig;
 
   /// The toast is the Toast atom: `Surface/CustomToast/Default/Default` pill,
   /// `Text/CustomToast/Default` label, `Icon/CustomToast/Default` glyph — one
