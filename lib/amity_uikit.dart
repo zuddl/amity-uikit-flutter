@@ -103,12 +103,13 @@ class AmityUIKit {
         }
     }
 
-    cameras = await availableCameras();
+    // [ZUDDL] No camera scan here: it asks for camera access at sign-in.
+    // The post camera loads its own list; story creation is off.
 
     await AmityCoreClient.setup(
         option: AmityCoreClientOption(
           apiKey: apikey,
-          showLogs: true,
+          showLogs: false, // [ZUDDL] SDK logs can include user data.
           httpEndpoint: amityEndpoint!,
           mqttEndpoint: amityMqttEndpoint!,
           uploadEndpoint: amityUploadEndpoint!,
@@ -203,9 +204,14 @@ class AmityUIKit {
     return AmityCoreClient.getCurrentUser();
   }
 
-  void unRegisterDevice() {
-    AmityCoreClient.unregisterDeviceNotification();
-    AmityCoreClient.logout();
+  // [ZUDDL] Awaitable: push is unregistered before logout, so no
+  // registration outlives the session.
+  Future<void> unRegisterDevice() async {
+    try {
+      await AmityCoreClient.unregisterDeviceNotification();
+    } finally {
+      await AmityCoreClient.logout();
+    }
   }
 
   Future<void> joinInitialCommunity(List<String> communityIds) async {
@@ -280,8 +286,6 @@ class AmityUIKitProvider extends StatelessWidget {
             localeResolutionCallback: (deviceLocale, supportedLocales) {
               if (deviceLocale != null) {
                 for (var locale in supportedLocales) {
-                  print("deviceLocale: ${deviceLocale.languageCode}");
-                  print("supportedLocales: $supportedLocales}");
                   // Check for exact matches first
                   if (locale.languageCode == deviceLocale.languageCode &&
                       locale.countryCode == deviceLocale.countryCode) {
@@ -299,6 +303,43 @@ class AmityUIKitProvider extends StatelessWidget {
           );
         });
       }),
+    );
+  }
+}
+
+/// [ZUDDL] The UIKit's blocs and providers without a `MaterialApp`, for apps
+/// that host the UIKit inside their own navigator. The host must set
+/// [NavigationService.navigatorKey] and provide [AppLocalizations].
+class AmityUIKitScope extends StatelessWidget {
+  final Widget child;
+  const AmityUIKitScope({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GlobalFeedBloc>(create: (context) => GlobalFeedBloc()),
+        BlocProvider<AmityToastBloc>(create: (context) => AmityToastBloc()),
+        BlocProvider<SocialHomeBloc>(create: (context) => SocialHomeBloc()),
+        BlocProvider<CreateStoryPageBloc>(
+            create: (context) => CreateStoryPageBloc()),
+        BlocProvider<HyperlinkBloc>(create: (context) => HyperlinkBloc()),
+        BlocProvider<CreateStoryBloc>(create: (context) => CreateStoryBloc()),
+        BlocProvider<StoryVideoPlayerBloc>(
+            create: (context) => StoryVideoPlayerBloc()),
+      ],
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AmityUIConfiguration>(
+              create: (context) => AmityUIConfiguration()),
+          ChangeNotifierProvider<MyCommunityVM>(
+              create: (context) => MyCommunityVM()),
+          ChangeNotifierProvider<ConfigProvider>(
+              key: const ValueKey("global_config"),
+              create: (context) => ConfigProvider()..loadConfig()),
+        ],
+        child: child,
+      ),
     );
   }
 }
