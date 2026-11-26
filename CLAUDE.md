@@ -3,6 +3,21 @@
 Zuddl's fork of Amity's Social+ Flutter UIKit (`AmityCo/Amity-Social-UIKit-Flutter-Opensource`).
 Used only by `portal-flutter` for the event Feed. Design: Linear "Tech Spec: Portal Flutter Feed".
 
+## ⛔ This repo is public
+
+Anyone can read every file, commit, tag and commit message here. `portal-flutter` CI clones it
+without credentials, so it stays public.
+
+- Never commit anything secret or private to Zuddl: API keys, tokens, Amity/Social+ keys, auth
+  tokens, signing files, Firebase configs, `.env` files, internal or staging URLs, customer or event
+  names, attendee data, emails or screenshots of real events.
+- Keys and config come from `portal-flutter` at runtime, never from this repo.
+- No links to private Zuddl repos, Linear tickets, Slack or internal docs in code, comments,
+  `ZUDDL_CHANGES.md` or commit messages. Say what the change does instead.
+- Test data is made up (`user-1`, `community-1`), never copied from a real event.
+- Before each push, check the diff for any of the above. If something slipped in, don't push. A
+  pushed secret is leaked even after a revert: rotate it.
+
 ## Branches and tags
 
 - Zuddl patches go directly on `main`. There is no separate patch branch.
